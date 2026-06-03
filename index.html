@@ -3,131 +3,193 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Horizon Digital — Build the Future</title>
+    <title>ShopVerse — Ecommerce Premium</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        /* ========== RESET & BASE ========== */
+        /* ================================================================
+           RESET & BASE
+           ================================================================ */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
-            background: #0b0d17;
+            background: #0a0c15;
             color: #e8edf5;
             overflow-x: hidden;
             line-height: 1.6;
+            min-height: 100vh;
         }
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
         img { max-width: 100%; display: block; }
+        button { cursor: pointer; font-family: inherit; }
+        input, select, textarea { font-family: inherit; }
 
-        /* ========== ANIMATED BACKGROUND ========== */
-        #bg-canvas {
+        /* ================================================================
+           SCROLLBAR
+           ================================================================ */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0c15; }
+        ::-webkit-scrollbar-thumb { background: #2d2f3e; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+
+        /* ================================================================
+           UTILITY
+           ================================================================ */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 100px;
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            border: 1px solid rgba(99, 102, 241, 0.25);
+        }
+        .section-title {
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .section-sub {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        /* ================================================================
+           PARTICLES BACKGROUND
+           ================================================================ */
+        #particles-canvas {
             position: fixed;
             top: 0; left: 0;
-            width: 100vw; height: 100vh;
+            width: 100%; height: 100%;
             z-index: 0;
             pointer-events: none;
         }
 
-        /* ========== UTILITY ========== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
-            z-index: 1;
-        }
-        .section {
-            padding: 100px 0;
-            position: relative;
-            z-index: 1;
-        }
-        .badge {
-            display: inline-block;
-            padding: 6px 18px;
-            border-radius: 100px;
-            background: rgba(99, 102, 241, 0.15);
-            color: #a5b4fc;
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            border: 1px solid rgba(99, 102, 241, 0.25);
-            margin-bottom: 16px;
-        }
-        .section-title {
-            font-size: clamp(2rem, 5vw, 3.2rem);
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 16px;
-        }
-        .section-sub {
-            font-size: 1.1rem;
-            color: #94a3b8;
-            max-width: 560px;
-        }
-
-        /* ========== NAVBAR ========== */
+        /* ================================================================
+           NAVBAR
+           ================================================================ */
         .navbar {
             position: fixed;
             top: 0; left: 0; width: 100%;
-            z-index: 100;
-            padding: 18px 0;
+            z-index: 1000;
+            padding: 16px 0;
             transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
         }
         .navbar.scrolled {
-            background: rgba(11, 13, 23, 0.85);
-            backdrop-filter: blur(16px);
-            padding: 12px 0;
+            background: rgba(10, 12, 21, 0.88);
+            backdrop-filter: blur(18px);
+            padding: 10px 0;
             border-bottom: 1px solid rgba(255,255,255,0.06);
         }
         .navbar .container {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 20px;
         }
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo-icon {
+            width: 32px; height: 32px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: #fff;
+        }
+        .logo span {
             background: linear-gradient(135deg, #6366f1, #a855f7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .nav-links { display: flex; gap: 32px; align-items: center; }
-        .nav-links a {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #94a3b8;
-            transition: color 0.3s;
+
+        /* Search Bar */
+        .search-wrapper {
+            flex: 1;
+            max-width: 420px;
             position: relative;
         }
-        .nav-links a::after {
-            content: '';
+        .search-wrapper svg {
             position: absolute;
-            bottom: -4px; left: 0;
-            width: 0; height: 2px;
-            background: #6366f1;
-            transition: width 0.3s;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            pointer-events: none;
         }
-        .nav-links a:hover { color: #fff; }
-        .nav-links a:hover::after { width: 100%; }
-        .btn-nav {
-            padding: 8px 22px;
+        .search-wrapper input {
+            width: 100%;
+            padding: 10px 16px 10px 42px;
             border-radius: 100px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: #fff !important;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            color: #e8edf5;
+            font-size: 0.88rem;
+            outline: none;
+            transition: border-color 0.3s, background 0.3s;
         }
-        .btn-nav:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+        .search-wrapper input:focus {
+            border-color: rgba(99,102,241,0.4);
+            background: rgba(255,255,255,0.07);
         }
-        .btn-nav::after { display: none !important; }
+        .search-wrapper input::placeholder { color: #475569; }
 
-        /* hamburger */
+        /* Nav Actions */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .nav-btn {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s, border-color 0.3s, transform 0.3s;
+            position: relative;
+        }
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+        .cart-count {
+            position: absolute;
+            top: -4px; right: -4px;
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #0a0c15;
+        }
+
+        /* Hamburger */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -139,686 +201,1480 @@
         }
         .hamburger span {
             display: block;
-            width: 26px; height: 2px;
+            width: 24px; height: 2px;
             background: #e8edf5;
             border-radius: 2px;
             transition: 0.3s;
         }
 
-        /* ========== HERO ========== */
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px; left: 0; right: 0;
+            background: rgba(10,12,21,0.97);
+            backdrop-filter: blur(20px);
+            padding: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            z-index: 999;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            color: #94a3b8;
+            font-weight: 500;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: color 0.3s;
+        }
+        .mobile-menu a:hover { color: #fff; }
+
+        /* ================================================================
+           HERO
+           ================================================================ */
         .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
+            padding: 140px 0 60px;
             position: relative;
             z-index: 1;
-            padding-top: 80px;
+            text-align: center;
         }
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
+        .hero .badge {
+            margin-bottom: 16px;
         }
-        .hero-content h1 {
-            font-size: clamp(2.6rem, 6vw, 4rem);
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
             font-weight: 800;
-            line-height: 1.15;
-            margin-bottom: 20px;
+            line-height: 1.2;
+            margin-bottom: 16px;
         }
-        .hero-content h1 span {
+        .hero h1 span {
             background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .hero-content p {
-            font-size: 1.15rem;
+        .hero p {
+            font-size: 1.05rem;
             color: #94a3b8;
-            margin-bottom: 36px;
-            max-width: 480px;
-        }
-        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 32px;
-            border-radius: 100px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: #fff;
-            font-weight: 600;
-            font-size: 0.95rem;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(99, 102, 241, 0.4);
-        }
-        .btn-outline {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 32px;
-            border-radius: 100px;
-            background: transparent;
-            color: #e8edf5;
-            font-weight: 600;
-            font-size: 0.95rem;
-            border: 1px solid rgba(255,255,255,0.15);
-            cursor: pointer;
-            transition: background 0.3s, border-color 0.3s;
-        }
-        .btn-outline:hover {
-            background: rgba(255,255,255,0.05);
-            border-color: rgba(255,255,255,0.3);
+            max-width: 520px;
+            margin: 0 auto 28px;
         }
 
-        .hero-visual {
+        /* Category Pills */
+        .category-pills {
             display: flex;
+            gap: 10px;
             justify-content: center;
-            align-items: center;
-            position: relative;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
         }
-        .hero-orb {
-            width: 340px;
-            height: 340px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, rgba(99,102,241,0.25), rgba(168,85,247,0.1), transparent 70%);
-            position: relative;
-            animation: float 6s ease-in-out infinite;
-        }
-        .hero-orb::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg, #6366f1, #a855f7, #ec4899, #6366f1);
-            opacity: 0.15;
-            mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
-            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
-        }
-        .hero-orb-inner {
-            position: absolute;
-            inset: 30px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 40% 40%, rgba(99,102,241,0.15), transparent);
-            animation: pulse-glow 4s ease-in-out infinite;
-        }
-        .floating-card {
-            position: absolute;
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(12px);
+        .category-pill {
+            padding: 8px 22px;
+            border-radius: 100px;
             border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px;
-            padding: 12px 18px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #cbd5e1;
-            animation: float-card 5s ease-in-out infinite;
-            white-space: nowrap;
-        }
-        .floating-card:nth-child(2) { top: 10%; right: -20px; animation-delay: 0.5s; }
-        .floating-card:nth-child(3) { bottom: 15%; left: -30px; animation-delay: 1.5s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-        @keyframes pulse-glow {
-            0%, 100% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.08); }
-        }
-        @keyframes float-card {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(2deg); }
-        }
-
-        /* ========== STATS ========== */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            margin-top: 60px;
-        }
-        .stat-item {
-            text-align: center;
-            padding: 28px 16px;
-            border-radius: 20px;
             background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            transition: background 0.3s, transform 0.3s;
-        }
-        .stat-item:hover {
-            background: rgba(255,255,255,0.06);
-            transform: translateY(-4px);
-        }
-        .stat-number {
-            font-size: 2.4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #6366f1, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .stat-label {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-top: 6px;
-        }
-
-        /* ========== SERVICES ========== */
-        .services-header { text-align: center; margin-bottom: 56px; }
-        .services-header .section-sub { margin: 0 auto; }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-        .service-card {
-            padding: 36px 28px;
-            border-radius: 24px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            transition: background 0.3s, transform 0.3s, border-color 0.3s;
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 3px;
-            background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.5s;
-        }
-        .service-card:hover::before { transform: scaleX(1); }
-        .service-card:hover {
-            background: rgba(255,255,255,0.06);
-            transform: translateY(-6px);
-            border-color: rgba(99,102,241,0.2);
-        }
-        .service-icon {
-            width: 52px; height: 52px;
-            border-radius: 14px;
-            background: rgba(99,102,241,0.12);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            margin-bottom: 20px;
-        }
-        .service-card h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        .service-card p {
-            font-size: 0.92rem;
             color: #94a3b8;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
         }
-
-        /* ========== TESTIMONIALS ========== */
-        .testimonials-header { text-align: center; margin-bottom: 56px; }
-        .testimonials-header .section-sub { margin: 0 auto; }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
+        .category-pill:hover {
+            background: rgba(99,102,241,0.1);
+            border-color: rgba(99,102,241,0.25);
+            color: #e8edf5;
         }
-        .testimonial-card {
-            padding: 32px 28px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            transition: background 0.3s, transform 0.3s;
-        }
-        .testimonial-card:hover {
-            background: rgba(255,255,255,0.06);
-            transform: translateY(-4px);
-        }
-        .testimonial-stars {
-            color: #f59e0b;
-            font-size: 1rem;
-            margin-bottom: 14px;
-            letter-spacing: 2px;
-        }
-        .testimonial-text {
-            font-size: 0.95rem;
-            color: #cbd5e1;
-            font-style: italic;
-            margin-bottom: 20px;
-            line-height: 1.7;
-        }
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .testimonial-avatar {
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #6366f1, #a855f7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.9rem;
+        .category-pill.active {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-color: transparent;
             color: #fff;
-            flex-shrink: 0;
-        }
-        .testimonial-name {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        .testimonial-role {
-            font-size: 0.78rem;
-            color: #64748b;
+            box-shadow: 0 4px 16px rgba(99,102,241,0.3);
         }
 
-        /* ========== CTA ========== */
-        .cta-section {
-            text-align: center;
-            padding: 100px 0;
+        /* ================================================================
+           PRODUCT GRID
+           ================================================================ */
+        .products-section {
             position: relative;
             z-index: 1;
+            padding-bottom: 80px;
         }
-        .cta-box {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 60px 40px;
-            border-radius: 32px;
-            background: radial-gradient(ellipse at center, rgba(99,102,241,0.08), transparent);
-            border: 1px solid rgba(99,102,241,0.15);
-        }
-        .cta-box h2 {
-            font-size: clamp(2rem, 4vw, 2.8rem);
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-        .cta-box p {
-            color: #94a3b8;
-            margin-bottom: 32px;
-            font-size: 1.05rem;
-        }
-        .cta-form {
+        .products-header {
             display: flex;
-            gap: 12px;
-            max-width: 480px;
-            margin: 0 auto;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 16px;
         }
-        .cta-form input {
-            flex: 1;
-            padding: 14px 20px;
+        .products-header-left { display: flex; align-items: center; gap: 12px; }
+        .product-count {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+        .sort-select {
+            padding: 8px 16px;
             border-radius: 100px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.05);
-            color: #e8edf5;
-            font-size: 0.95rem;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            color: #cbd5e1;
+            font-size: 0.85rem;
             outline: none;
             transition: border-color 0.3s;
         }
-        .cta-form input:focus {
-            border-color: #6366f1;
+        .sort-select:focus { border-color: rgba(99,102,241,0.4); }
+        .sort-select option { background: #0a0c15; color: #e8edf5; }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
         }
-        .cta-form input::placeholder {
-            color: #475569;
+
+        /* Product Card */
+        .product-card {
+            border-radius: 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            cursor: pointer;
         }
-        .cta-form button {
-            padding: 14px 28px;
-            border-radius: 100px;
+        .product-card:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateY(-8px);
+            border-color: rgba(99,102,241,0.2);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .product-card-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, rgba(99,102,241,0.05), rgba(168,85,247,0.05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-card-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 60%;
+            background: linear-gradient(to top, rgba(10,12,21,0.8), transparent);
+            pointer-events: none;
+        }
+        .product-badge {
+            position: absolute;
+            top: 12px; left: 12px;
+            z-index: 2;
+        }
+        .product-wishlist {
+            position: absolute;
+            top: 12px; right: 12px;
+            z-index: 2;
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            background: rgba(10,12,21,0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        .product-wishlist:hover {
+            background: rgba(239,68,68,0.2);
+            border-color: rgba(239,68,68,0.3);
+            color: #ef4444;
+        }
+        .product-card-body {
+            padding: 18px 20px 20px;
+        }
+        .product-category {
+            font-size: 0.7rem;
+            color: #6366f1;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .product-card-body h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            line-height: 1.3;
+            /* 2 lines clamp */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        .product-stars {
+            color: #f59e0b;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+        .product-rating span {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+        .product-price-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .product-price-old {
+            font-size: 0.8rem;
+            color: #64748b;
+            text-decoration: line-through;
+            margin-left: 6px;
+            font-weight: 400;
+        }
+        .btn-add-cart {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: none;
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
             color: #fff;
-            font-weight: 600;
-            font-size: 0.95rem;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            flex-shrink: 0;
         }
-        .cta-form button:hover {
+        .btn-add-cart:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 16px rgba(99,102,241,0.4);
+        }
+        .btn-add-cart.added {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        /* ================================================================
+           EMPTY STATE
+           ================================================================ */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #64748b;
+        }
+        .empty-state .emoji {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+        .empty-state h3 {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        /* ================================================================
+           CART SIDEBAR
+           ================================================================ */
+        .cart-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        .cart-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .cart-sidebar {
+            position: fixed;
+            top: 0; right: 0;
+            width: 420px;
+            max-width: 100vw;
+            height: 100vh;
+            background: #0f1120;
+            border-left: 1px solid rgba(255,255,255,0.06);
+            z-index: 2001;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            flex-direction: column;
+        }
+        .cart-sidebar.open {
+            transform: translateX(0);
+        }
+        .cart-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .cart-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .cart-header h2 span {
+            color: #64748b;
+            font-weight: 400;
+        }
+        .cart-close {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255,255,255,0.05);
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        .cart-close:hover { background: rgba(255,255,255,0.1); }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+        .cart-item {
+            display: flex;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .cart-item-image {
+            width: 64px; height: 64px;
+            border-radius: 12px;
+            background: rgba(99,102,241,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+        .cart-item-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .cart-item-info h4 {
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .cart-item-price {
+            font-size: 0.82rem;
+            color: #a5b4fc;
+            font-weight: 600;
+        }
+        .cart-item-qty {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 6px;
+        }
+        .cart-item-qty button {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: transparent;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        .cart-item-qty button:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
+        }
+        .cart-item-qty span {
+            font-size: 0.9rem;
+            font-weight: 600;
+            min-width: 20px;
+            text-align: center;
+        }
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 0.8rem;
+            padding: 4px;
+            align-self: flex-start;
+            transition: color 0.3s;
+        }
+        .cart-item-remove:hover { color: #ef4444; }
+
+        .cart-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+        }
+        .cart-empty .emoji { font-size: 3rem; margin-bottom: 12px; }
+
+        .cart-footer {
+            padding: 20px 24px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            background: rgba(10,12,21,0.5);
+        }
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .cart-total-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+        .cart-total-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .btn-checkout {
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-checkout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99,102,241,0.35);
+        }
+        .btn-checkout:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ================================================================
+           PRODUCT MODAL (Quick View)
+           ================================================================ */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .product-modal {
+            background: #0f1120;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.06);
+            max-width: 720px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 32px;
+            position: relative;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .modal-overlay.open .product-modal {
+            transform: scale(1) translateY(0);
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255,255,255,0.05);
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        .modal-close:hover { background: rgba(255,255,255,0.1); }
+
+        .modal-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+        }
+        .modal-image {
+            height: 300px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(168,85,247,0.06));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+        }
+        .modal-info .badge { margin-bottom: 10px; }
+        .modal-info h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .modal-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+        .modal-rating .stars { color: #f59e0b; font-size: 0.9rem; }
+        .modal-rating span { font-size: 0.8rem; color: #64748b; }
+        .modal-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .modal-price .old {
+            font-size: 1rem;
+            color: #64748b;
+            text-decoration: line-through;
+            font-weight: 400;
+            margin-left: 8px;
+        }
+        .modal-desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin: 12px 0 20px;
+        }
+        .modal-colors {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .modal-colors span {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-right: 4px;
+        }
+        .color-dot {
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
+            cursor: pointer;
+        }
+        .color-dot:hover,
+        .color-dot.active { border-color: #6366f1; }
+
+        .modal-qty {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .modal-qty label {
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+        .modal-qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .modal-qty-controls button {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: transparent;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        .modal-qty-controls button:hover {
+            background: rgba(255,255,255,0.08);
+        }
+        .modal-qty-controls span {
+            font-size: 1rem;
+            font-weight: 600;
+            min-width: 24px;
+            text-align: center;
+        }
+        .btn-add-to-cart {
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        .btn-add-to-cart:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(99,102,241,0.35);
         }
 
-        /* ========== FOOTER ========== */
-        .footer {
-            border-top: 1px solid rgba(255,255,255,0.06);
-            padding: 40px 0;
-            position: relative;
-            z-index: 1;
+        /* ================================================================
+           CHECKOUT MODAL
+           ================================================================ */
+        .checkout-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            z-index: 4000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
         }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 40px;
+        .checkout-overlay.open {
+            opacity: 1;
+            pointer-events: all;
         }
-        .footer-brand p {
+        .checkout-modal {
+            background: #0f1120;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.06);
+            max-width: 560px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 36px 32px;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .checkout-overlay.open .checkout-modal {
+            transform: scale(1) translateY(0);
+        }
+        .checkout-modal h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .checkout-modal .sub {
             color: #64748b;
             font-size: 0.9rem;
-            margin-top: 12px;
-            max-width: 280px;
+            margin-bottom: 24px;
         }
-        .footer h4 {
-            font-size: 0.85rem;
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
             font-weight: 600;
             color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
+            margin-bottom: 6px;
         }
-        .footer ul li { margin-bottom: 10px; }
-        .footer ul li a {
-            color: #64748b;
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            color: #e8edf5;
             font-size: 0.9rem;
-            transition: color 0.3s;
+            outline: none;
+            transition: border-color 0.3s;
         }
-        .footer ul li a:hover { color: #e8edf5; }
-        .footer-bottom {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.06);
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: rgba(99,102,241,0.4);
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #475569;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .form-group select option {
+            background: #0a0c15;
+            color: #e8edf5;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .checkout-summary {
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+        .checkout-summary-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
-            color: #475569;
+            padding: 6px 0;
+            font-size: 0.88rem;
+            color: #94a3b8;
         }
-        .footer-socials {
-            display: flex;
-            gap: 16px;
+        .checkout-summary-row.total {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            margin-top: 6px;
+            padding-top: 12px;
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 700;
         }
-        .footer-socials a {
-            color: #64748b;
-            transition: color 0.3s;
+        .btn-place-order {
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 8px;
         }
-        .footer-socials a:hover { color: #e8edf5; }
+        .btn-place-order:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(16,185,129,0.35);
+        }
+        .btn-place-order:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
 
-        /* ========== PARTICLES ========== */
-        #particles-canvas {
+        /* ================================================================
+           TOAST NOTIFICATION
+           ================================================================ */
+        .toast-container {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             pointer-events: none;
         }
+        .toast {
+            padding: 14px 20px;
+            border-radius: 16px;
+            background: #1a1d2e;
+            border: 1px solid rgba(255,255,255,0.06);
+            backdrop-filter: blur(16px);
+            color: #e8edf5;
+            font-size: 0.88rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+            animation: slideInToast 0.4s ease forwards;
+            pointer-events: all;
+            min-width: 260px;
+        }
+        .toast.success { border-color: rgba(16,185,129,0.3); }
+        .toast.error { border-color: rgba(239,68,68,0.3); }
+        .toast .toast-icon { font-size: 1.2rem; }
+        .toast.removing {
+            animation: slideOutToast 0.3s ease forwards;
+        }
+        @keyframes slideInToast {
+            from { opacity: 0; transform: translateX(60px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideOutToast {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(60px); }
+        }
 
-        /* ========== SCROLL REVEAL ========== */
+        /* ================================================================
+           SCROLL REVEAL
+           ================================================================ */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 968px) {
-            .hero-grid { grid-template-columns: 1fr; text-align: center; }
-            .hero-content p { margin: 0 auto 36px; }
-            .hero-buttons { justify-content: center; }
-            .hero-orb { width: 240px; height: 240px; }
-            .floating-card { display: none; }
-            .services-grid { grid-template-columns: 1fr 1fr; }
-            .testimonials-grid { grid-template-columns: 1fr 1fr; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        /* ================================================================
+           RESPONSIVE
+           ================================================================ */
+        @media (max-width: 1024px) {
+            .modal-layout { grid-template-columns: 1fr; }
+            .modal-image { height: 220px; }
         }
-        @media (max-width: 640px) {
-            .nav-links { display: none; }
+        @media (max-width: 768px) {
+            .search-wrapper { display: none; }
+            .search-wrapper.mobile-show { display: block; max-width: 100%; }
             .hamburger { display: flex; }
-            .nav-links.open {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%; left: 0; right: 0;
-                background: rgba(11,13,23,0.95);
-                backdrop-filter: blur(16px);
-                padding: 24px;
-                gap: 20px;
-                border-bottom: 1px solid rgba(255,255,255,0.06);
+            .nav-actions .nav-btn { width: 36px; height: 36px; }
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 16px;
             }
-            .services-grid { grid-template-columns: 1fr; }
-            .testimonials-grid { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .cta-form { flex-direction: column; }
-            .hero-content h1 { font-size: 2rem; }
-            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+            .cart-sidebar { width: 100%; }
+            .product-modal { padding: 24px; }
+            .checkout-modal { padding: 24px; }
+            .form-row { grid-template-columns: 1fr; }
+            .hero { padding: 120px 0 40px; }
+        }
+        @media (max-width: 500px) {
+            .products-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .product-card-image { height: 150px; font-size: 2.5rem; }
+            .product-card-body { padding: 12px 14px 16px; }
+            .product-card-body h3 { font-size: 0.85rem; }
+            .product-price { font-size: 1rem; }
+            .container { padding: 0 16px; }
+            .category-pills { gap: 6px; }
+            .category-pill { padding: 6px 14px; font-size: 0.78rem; }
+            .hero h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== PARTICLES CANVAS ===== -->
+    <!-- ===== PARTICLES ===== -->
     <canvas id="particles-canvas"></canvas>
+
+    <!-- ===== TOAST CONTAINER ===== -->
+    <div class="toast-container" id="toastContainer"></div>
 
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
-            <a href="#" class="logo">Horizon</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#services">Layanan</a></li>
-                <li><a href="#testimonials">Testimoni</a></li>
-                <li><a href="#contact" class="btn-nav">Hubungi Kami</a></li>
-            </ul>
-            <button class="hamburger" id="hamburger" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
+            <a href="#" class="logo">
+                <div class="logo-icon">S</div>
+                <span>ShopVerse</span>
+            </a>
+
+            <div class="search-wrapper">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="searchInput" placeholder="Cari produk..." autocomplete="off" />
+            </div>
+
+            <div class="nav-actions">
+                <button class="nav-btn" id="searchToggle" aria-label="Search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </button>
+                <button class="nav-btn" id="cartToggle" aria-label="Cart">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#" onclick="closeMobileMenu(); filterProducts('all');">Semua Produk</a>
+        <a href="#" onclick="closeMobileMenu(); filterProducts('elektronik');">Elektronik</a>
+        <a href="#" onclick="closeMobileMenu(); filterProducts('fashion');">Fashion</a>
+        <a href="#" onclick="closeMobileMenu(); filterProducts('rumah');">Home & Living</a>
+        <a href="#" onclick="closeMobileMenu(); filterProducts('olahraga');">Olahraga</a>
+        <a href="#" onclick="closeMobileMenu(); document.getElementById('cartToggle').click();">🛒 Keranjang</a>
+    </div>
 
     <!-- ===== HERO ===== -->
     <section class="hero">
         <div class="container">
-            <div class="hero-grid">
-                <div class="hero-content">
-                    <div class="badge">🚀 Solusi Digital Terpercaya</div>
-                    <h1>Kami <span>Bangun</span> Masa Depan Digital Anda</h1>
-                    <p>Dari konsep hingga peluncuran — kami membantu bisnis Anda bertransformasi secara digital dengan solusi yang modern, cepat, dan scalable.</p>
-                    <div class="hero-buttons">
-                        <a href="#contact" class="btn-primary">
-                            Mulai Sekarang
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                        </a>
-                        <a href="#services" class="btn-outline">Lihat Layanan</a>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="hero-orb">
-                        <div class="hero-orb-inner"></div>
-                        <div class="floating-card">⚡ AI-Powered</div>
-                        <div class="floating-card">🌐 Full-Stack</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stats -->
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number" data-target="150">0</div>
-                    <div class="stat-label">Project Selesai</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" data-target="48">0</div>
-                    <div class="stat-label">Klien Puas</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" data-target="5">0</div>
-                    <div class="stat-label">Tahun Pengalaman</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" data-target="98">0</div>
-                    <div class="stat-label">% Kepuasan</div>
-                </div>
+            <div class="badge">🔥 Flash Sale — Diskon hingga 50%</div>
+            <h1>Belanja <span>Premium</span> dengan Harga Terbaik</h1>
+            <p>Temukan ribuan produk berkualitas dengan harga spesial. Gratis ongkir & garansi resmi.</p>
+            <div class="category-pills" id="categoryPills">
+                <button class="category-pill active" data-category="all">Semua</button>
+                <button class="category-pill" data-category="elektronik">📱 Elektronik</button>
+                <button class="category-pill" data-category="fashion">👗 Fashion</button>
+                <button class="category-pill" data-category="rumah">🏠 Home & Living</button>
+                <button class="category-pill" data-category="olahraga">⚽ Olahraga</button>
             </div>
         </div>
     </section>
 
-    <!-- ===== SERVICES ===== -->
-    <section class="section" id="services">
+    <!-- ===== PRODUCTS ===== -->
+    <section class="products-section" id="products">
         <div class="container">
-            <div class="services-header reveal">
-                <div class="badge">✨ Layanan</div>
-                <h2 class="section-title">Apa yang Kami Tawarkan</h2>
-                <p class="section-sub">Solusi lengkap untuk kebutuhan digital Anda, dari desain hingga deployment.</p>
+            <div class="products-header reveal">
+                <div class="products-header-left">
+                    <h2 class="section-title">Produk Pilihan</h2>
+                    <span class="product-count" id="productCount">0 item</span>
+                </div>
+                <select class="sort-select" id="sortSelect">
+                    <option value="default">Urutkan: Default</option>
+                    <option value="price-asc">Harga: Rendah → Tinggi</option>
+                    <option value="price-desc">Harga: Tinggi → Rendah</option>
+                    <option value="rating">Rating Tertinggi</option>
+                    <option value="name">Nama A–Z</option>
+                </select>
             </div>
-            <div class="services-grid">
-                <div class="service-card reveal">
-                    <div class="service-icon">🎨</div>
-                    <h3>UI/UX Design</h3>
-                    <p>Desain antarmuka yang intuitif dan memorable, didukung riset pengguna dan prototipe interaktif.</p>
-                </div>
-                <div class="service-card reveal">
-                    <div class="service-icon">⚙️</div>
-                    <h3>Web Development</h3>
-                    <p>Aplikasi web berperforma tinggi dengan teknologi terkini — React, Next.js, Node.js, dan lainnya.</p>
-                </div>
-                <div class="service-card reveal">
-                    <div class="service-icon">🤖</div>
-                    <h3>AI & Automation</h3>
-                    <p>Integrasi kecerdasan buatan dan otomatisasi untuk efisiensi operasional bisnis Anda.</p>
-                </div>
-                <div class="service-card reveal">
-                    <div class="service-icon">📱</div>
-                    <h3>Mobile Apps</h3>
-                    <p>Aplikasi mobile native dan cross-platform yang cepat, ringan, dan menyenangkan digunakan.</p>
-                </div>
-                <div class="service-card reveal">
-                    <div class="service-icon">☁️</div>
-                    <h3>Cloud & DevOps</h3>
-                    <p>Infrastruktur cloud yang skalabel, pipeline CI/CD, dan monitoring 24/7 untuk sistem Anda.</p>
-                </div>
-                <div class="service-card reveal">
-                    <div class="service-icon">📊</div>
-                    <h3>Digital Strategy</h3>
-                    <p>Konsultasi strategi digital, analitik, dan optimasi konversi untuk pertumbuhan bisnis.</p>
-                </div>
+
+            <div class="products-grid" id="productsGrid"></div>
+
+            <div class="empty-state" id="emptyState" style="display:none;">
+                <div class="emoji">🔍</div>
+                <h3>Produk tidak ditemukan</h3>
+                <p>Coba gunakan kata kunci lain atau pilih kategori berbeda.</p>
             </div>
         </div>
     </section>
 
-    <!-- ===== TESTIMONIALS ===== -->
-    <section class="section" id="testimonials">
-        <div class="container">
-            <div class="testimonials-header reveal">
-                <div class="badge">💬 Testimoni</div>
-                <h2 class="section-title">Apa Kata Klien Kami</h2>
-                <p class="section-sub">Mereka sudah merasakan dampak nyata dari kolaborasi bersama kami.</p>
+    <!-- ===== CART SIDEBAR ===== -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Keranjang <span id="cartItemCount">(0)</span></h2>
+            <button class="cart-close" id="cartClose">✕</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty">
+                <div class="emoji">🛒</div>
+                <p>Keranjang belanja masih kosong</p>
+                <p style="font-size:0.8rem;margin-top:6px;">Yuk, tambahkan produk favoritmu!</p>
             </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card reveal">
-                    <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"Tim Horizon benar-benar luar biasa. Mereka mengubah website kami dari yang biasa menjadi luar biasa dalam waktu singkat. Traffic naik 3x lipat!"</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">RA</div>
-                        <div>
-                            <div class="testimonial-name">Rina Andini</div>
-                            <div class="testimonial-role">CEO, TokoKita</div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display:none;">
+            <div class="cart-total-row">
+                <span class="cart-total-label">Total</span>
+                <span class="cart-total-price" id="cartTotal">Rp 0</span>
+            </div>
+            <button class="btn-checkout" id="checkoutBtn">Checkout Sekarang</button>
+        </div>
+    </div>
+
+    <!-- ===== PRODUCT MODAL ===== -->
+    <div class="modal-overlay" id="productModal">
+        <div class="product-modal">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-layout">
+                <div class="modal-image" id="modalImage">📱</div>
+                <div class="modal-info">
+                    <div class="badge" id="modalCategory">Elektronik</div>
+                    <h2 id="modalTitle">Nama Produk</h2>
+                    <div class="modal-rating">
+                        <span class="stars" id="modalStars">★★★★★</span>
+                        <span id="modalRatingText">(4.8)</span>
+                    </div>
+                    <div class="modal-price" id="modalPrice">Rp 1.999.000</div>
+                    <p class="modal-desc" id="modalDesc">Deskripsi produk akan ditampilkan di sini.</p>
+                    <div class="modal-colors" id="modalColors">
+                        <span>Warna:</span>
+                    </div>
+                    <div class="modal-qty">
+                        <label>Jumlah:</label>
+                        <div class="modal-qty-controls">
+                            <button id="modalQtyMinus">−</button>
+                            <span id="modalQtyValue">1</span>
+                            <button id="modalQtyPlus">+</button>
                         </div>
                     </div>
-                </div>
-                <div class="testimonial-card reveal">
-                    <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"Profesional, responsif, dan hasilnya melebihi ekspektasi. Aplikasi mobile yang mereka buat sangat stabil dan disukai pengguna kami."</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">BP</div>
-                        <div>
-                            <div class="testimonial-name">Bambang Prasetyo</div>
-                            <div class="testimonial-role">Founder, EduNation</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card reveal">
-                    <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"Sistem otomatisasi yang mereka bangun menghemat waktu operasional kami hingga 60%. Investasi terbaik yang pernah kami buat."</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">SL</div>
-                        <div>
-                            <div class="testimonial-name">Sari Lestari</div>
-                            <div class="testimonial-role">COO, FinCorp</div>
-                        </div>
-                    </div>
+                    <button class="btn-add-to-cart" id="modalAddToCart">
+                        🛒 Tambah ke Keranjang
+                    </button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- ===== CTA ===== -->
-    <section class="cta-section" id="contact">
-        <div class="container">
-            <div class="cta-box reveal">
-                <div class="badge">📩 Mulai Sekarang</div>
-                <h2>Siap Mengubah Ide Menjadi Realitas?</h2>
-                <p>Isi email Anda dan tim kami akan menghubungi dalam 1×24 jam untuk diskusi gratis.</p>
-                <form class="cta-form" id="ctaForm">
-                    <input type="email" placeholder="Masukkan email Anda..." required />
-                    <button type="submit">Kirim</button>
-                </form>
-                <p style="margin-top: 12px; font-size: 0.8rem; color: #475569;">Gratis konsultasi — tanpa komitmen.</p>
-            </div>
-        </div>
-    </section>
+    <!-- ===== CHECKOUT MODAL ===== -->
+    <div class="checkout-overlay" id="checkoutOverlay">
+        <div class="checkout-modal">
+            <h2>📋 Checkout</h2>
+            <p class="sub">Lengkapi data diri Anda untuk melanjutkan pemesanan.</p>
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="#" class="logo">Horizon</a>
-                    <p>Membangun solusi digital yang memberdayakan bisnis untuk tumbuh di era modern.</p>
+            <div class="form-group">
+                <label for="checkoutName">Nama Lengkap</label>
+                <input type="text" id="checkoutName" placeholder="Masukkan nama lengkap" required />
+            </div>
+            <div class="form-group">
+                <label for="checkoutEmail">Email</label>
+                <input type="email" id="checkoutEmail" placeholder="contoh@email.com" required />
+            </div>
+            <div class="form-group">
+                <label for="checkoutPhone">No. Telepon</label>
+                <input type="tel" id="checkoutPhone" placeholder="08xxxxxxx" required />
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="checkoutProvince">Provinsi</label>
+                    <select id="checkoutProvince">
+                        <option value="">Pilih Provinsi</option>
+                        <option>Jawa Barat</option>
+                        <option>Jawa Timur</option>
+                        <option>Jawa Tengah</option>
+                        <option>DKI Jakarta</option>
+                        <option>Banten</option>
+                        <option>Sumatera Utara</option>
+                        <option>Sulawesi Selatan</option>
+                        <option>Kalimantan Timur</option>
+                        <option>Bali</option>
+                        <option>Lainnya</option>
+                    </select>
                 </div>
-                <div>
-                    <h4>Layanan</h4>
-                    <ul>
-                        <li><a href="#">Web Development</a></li>
-                        <li><a href="#">Mobile Apps</a></li>
-                        <li><a href="#">UI/UX Design</a></li>
-                        <li><a href="#">AI & Automation</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Perusahaan</h4>
-                    <ul>
-                        <li><a href="#">Tentang</a></li>
-                        <li><a href="#">Karir</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Kontak</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Dukungan</h4>
-                    <ul>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Kebijakan Privasi</a></li>
-                        <li><a href="#">Syarat & Ketentuan</a></li>
-                    </ul>
+                <div class="form-group">
+                    <label for="checkoutCity">Kota/Kabupaten</label>
+                    <input type="text" id="checkoutCity" placeholder="Nama kota" />
                 </div>
             </div>
-            <div class="footer-bottom">
-                <span>&copy; 2025 Horizon Digital. All rights reserved.</span>
-                <div class="footer-socials">
-                    <a href="#" aria-label="Twitter">𝕏</a>
-                    <a href="#" aria-label="LinkedIn">in</a>
-                    <a href="#" aria-label="GitHub">GH</a>
+            <div class="form-group">
+                <label for="checkoutAddress">Alamat Lengkap</label>
+                <textarea id="checkoutAddress" placeholder="Nama jalan, nomor rumah, RT/RW, kode pos"></textarea>
+            </div>
+
+            <div class="checkout-summary" id="checkoutSummary">
+                <div class="checkout-summary-row">
+                    <span>Subtotal</span>
+                    <span id="checkoutSubtotal">Rp 0</span>
+                </div>
+                <div class="checkout-summary-row">
+                    <span>Ongkos Kirim</span>
+                    <span id="checkoutShipping">Rp 15.000</span>
+                </div>
+                <div class="checkout-summary-row total">
+                    <span>Total</span>
+                    <span id="checkoutTotal">Rp 0</span>
                 </div>
             </div>
+
+            <button class="btn-place-order" id="placeOrderBtn">✅ Pesan Sekarang</button>
+            <p style="text-align:center;margin-top:10px;font-size:0.75rem;color:#475569;">Dengan memesan, Anda menyetujui syarat & ketentuan yang berlaku.</p>
         </div>
-    </footer>
+    </div>
 
     <script>
-        // ============================================================
-        //  1. PARTICLES (Canvas)
-        // ============================================================
+        // ================================================================
+        //  1. PRODUCT DATA
+        // ================================================================
+        const products = [
+            // ---- Elektronik ----
+            {
+                id: 1,
+                name: 'ProBook X1 Ultrabook',
+                category: 'elektronik',
+                categoryLabel: '📱 Elektronik',
+                price: 18999000,
+                oldPrice: 24999000,
+                emoji: '💻',
+                rating: 4.8,
+                reviews: 234,
+                description: 'Laptop ultrabook performa tinggi dengan prosesor generasi terbaru, layar 14" 4K OLED, RAM 16GB, SSD 512GB. Cocok untuk profesional dan kreator konten.',
+                colors: ['#6366f1', '#1e1e2e', '#e2e8f0']
+            },
+            {
+                id: 2,
+                name: 'SoundBurst Pro Wireless',
+                category: 'elektronik',
+                categoryLabel: '📱 Elektronik',
+                price: 2899000,
+                oldPrice: 3999000,
+                emoji: '🎧',
+                rating: 4.7,
+                reviews: 892,
+                description: 'Headphone wireless noise-cancelling terbaik dengan baterai 40 jam, driver 50mm, dan codec LDAC untuk kualitas audio Hi-Res.',
+                colors: ['#1e1e2e', '#e2e8f0', '#ef4444']
+            },
+            {
+                id: 3,
+                name: 'PixelMax 15 Pro',
+                category: 'elektronik',
+                categoryLabel: '📱 Elektronik',
+                price: 15999000,
+                oldPrice: 18999000,
+                emoji: '📱',
+                rating: 4.9,
+                reviews: 1456,
+                description: 'Smartphone flagship dengan kamera 200MP, chipset tercepat, layar 120Hz LTPO, dan baterai 6000mAh dengan fast charging 120W.',
+                colors: ['#1e1e2e', '#f5f5f5', '#a855f7']
+            },
+            {
+                id: 4,
+                name: 'SmartView 4K Monitor 32"',
+                category: 'elektronik',
+                categoryLabel: '📱 Elektronik',
+                price: 5499000,
+                oldPrice: 6999000,
+                emoji: '🖥️',
+                rating: 4.6,
+                reviews: 345,
+                description: 'Monitor 4K UHD 32" dengan IPS Panel, HDR600, refresh rate 144Hz, dan USB-C hub. Ideal untuk gaming dan desain grafis.',
+                colors: ['#1e1e2e', '#e2e8f0']
+            },
+            {
+                id: 5,
+                name: 'SmartWatch Ultra S3',
+                category: 'elektronik',
+                categoryLabel: '📱 Elektronik',
+                price: 4499000,
+                oldPrice: 5999000,
+                emoji: '⌚',
+                rating: 4.5,
+                reviews: 678,
+                description: 'Smartwatch premium dengan layar AMOLED, GPS, kesehatan monitoring, baterai 14 hari, dan tahan air 100m.',
+                colors: ['#1e1e2e', '#e2e8f0', '#6366f1']
+            },
+            {
+                id: 6,
+                name: 'GameStation X Console',
+                category: 'elektronik',
+                categoryLabel: '📱 Elektronik',
+                price: 7999000,
+                oldPrice: null,
+                emoji: '🎮',
+                rating: 4.9,
+                reviews: 2100,
+                description: 'Konsol gaming generasi baru dengan SSD ultra-cepat, ray tracing real-time, dan library game eksklusif tak terbatas.',
+                colors: ['#1e1e2e', '#e2e8f0']
+            },
+
+            // ---- Fashion ----
+            {
+                id: 7,
+                name: 'Jaket Urban Streetwear',
+                category: 'fashion',
+                categoryLabel: '👗 Fashion',
+                price: 599000,
+                oldPrice: 899000,
+                emoji: '🧥',
+                rating: 4.6,
+                reviews: 456,
+                description: 'Jaket casual modern berbahan premium cotton-blend. Desain minimalis dengan potongan oversized yang nyaman dipakai sehari-hari.',
+                colors: ['#1e1e2e', '#e2e8f0', '#ef4444', '#6366f1']
+            },
+            {
+                id: 8,
+                name: 'Sneakers AirFlow Max',
+                category: 'fashion',
+                categoryLabel: '👗 Fashion',
+                price: 1899000,
+                oldPrice: 2499000,
+                emoji: '👟',
+                rating: 4.8,
+                reviews: 1234,
+                description: 'Sepatu sneakers dengan teknologi air-cushioning, upper mesh breathable, dan outsole karet anti-slip. Nyaman untuk olahraga maupun harian.',
+                colors: ['#e2e8f0', '#1e1e2e', '#ef4444', '#f59e0b']
+            },
+            {
+                id: 9,
+                name: 'Kemeja Premium Linen',
+                category: 'fashion',
+                categoryLabel: '👗 Fashion',
+                price: 399000,
+                oldPrice: 599000,
+                emoji: '👔',
+                rating: 4.4,
+                reviews: 289,
+                description: 'Kemeja pria bahan linen premium import, adem dan nyaman. Cocok untuk acara formal maupun semi-formal dengan gaya timeless.',
+                colors: ['#e2e8f0', '#94a3b8', '#1e1e2e', '#a5b4fc']
+            },
+            {
+                id: 10,
+                name: 'Tas Ransel Urban 25L',
+                category: 'fashion',
+                categoryLabel: '👗 Fashion',
+                price: 799000,
+                oldPrice: 1099000,
+                emoji: '🎒',
+                rating: 4.7,
+                reviews: 567,
+                description: 'Tas ransel anti-air dengan kompartemen laptop 15", banyak kantong organizer, dan desain ergonomis untuk kenyamanan maksimal.',
+                colors: ['#1e1e2e', '#6366f1', '#e2e8f0']
+            },
+            {
+                id: 11,
+                name: 'Jam Tangan Chrono Elite',
+                category: 'fashion',
+                categoryLabel: '👗 Fashion',
+                price: 2499000,
+                oldPrice: 3499000,
+                emoji: '⌚',
+                rating: 4.5,
+                reviews: 345,
+                description: 'Jam tangan chronograph dengan movement quartz akurat, stainless steel case, sapphire crystal, dan water resistant 100m.',
+                colors: ['#1e1e2e', '#e2e8f0', '#f59e0b']
+            },
+            {
+                id: 12,
+                name: 'Set Cincin Couple Silver',
+                category: 'fashion',
+                categoryLabel: '👗 Fashion',
+                price: 499000,
+                oldPrice: null,
+                emoji: '💍',
+                rating: 4.9,
+                reviews: 890,
+                description: 'Set cincin couple dari perak sterling 925 dengan ukiran eksklusif. Hadir dalam kotak hadiah mewah — siap dijadikan kado spesial.',
+                colors: ['#e2e8f0', '#f59e0b']
+            },
+
+            // ---- Home & Living ----
+            {
+                id: 13,
+                name: 'Lampu Meja LED Smart',
+                category: 'rumah',
+                categoryLabel: '🏠 Home & Living',
+                price: 349000,
+                oldPrice: 499000,
+                emoji: '💡',
+                rating: 4.6,
+                reviews: 678,
+                description: 'Lampu meja LED dengan kontrol sentuh, 5 level kecerahan, 3 mode warna, dan pengisi daya nirkabel untuk smartphone.',
+                colors: ['#1e1e2e', '#e2e8f0', '#a855f7']
+            },
+            {
+                id: 14,
+                name: 'Set Peralatan Dapur 12 pcs',
+                category: 'rumah',
+                categoryLabel: '🏠 Home & Living',
+                price: 599000,
+                oldPrice: 799000,
+                emoji: '🍳',
+                rating: 4.7,
+                reviews: 432,
+                description: 'Set peralatan dapur lengkap 12 pcs dari bahan stainless steel berkualitas tinggi, anti-karat, dan ergonomis.',
+                colors: ['#94a3b8', '#1e1e2e']
+            },
+            {
+                id: 15,
+                name: 'Tanaman Hias Monstera',
+                category: 'rumah',
+                categoryLabel: '🏠 Home & Living',
+                price: 199000,
+                oldPrice: 299000,
+                emoji: '🌿',
+                rating: 4.8,
+                reviews: 1230,
+                description: 'Tanaman hias Monstera Deliciosa dalam pot keramik premium. Mudah dirawat, menyegarkan ruangan, dan estetik.',
+                colors: ['#10b981', '#1e1e2e', '#e2e8f0']
+            },
+            {
+                id: 16,
+                name: 'Aroma Diffuser Premium',
+                category: 'rumah',
+                categoryLabel: '🏠 Home & Living',
+                price: 249000,
+                oldPrice: null,
+                emoji: '🌸',
+                rating: 4.5,
+                reviews: 567,
+                description: 'Diffuser aromaterapi dengan teknologi ultrasonic, kapasitas 300ml, lampu LED 7 warna, dan timer otomatis.',
+                colors: ['#e2e8f0', '#1e1e2e', '#a855f7']
+            },
+            {
+                id: 17,
+                name: 'Set Handuk Premium 4 pcs',
+                category: 'rumah',
+                categoryLabel: '🏠 Home & Living',
+                price: 299000,
+                oldPrice: 449000,
+                emoji: '🛁',
+                rating: 4.4,
+                reviews: 789,
+                description: 'Handuk premium Turkish Cotton dengan gramasi 600gsm. Super lembut, cepat kering, dan tersedia 4 warna elegan.',
+                colors: ['#6366f1', '#ef4444', '#10b981', '#e2e8f0']
+            },
+            {
+                id: 18,
+                name: 'Bantal Ergonomis Memory Foam',
+                category: 'rumah',
+                categoryLabel: '🏠 Home & Living',
+                price: 449000,
+                oldPrice: 599000,
+                emoji: '🛏️',
+                rating: 4.7,
+                reviews: 1567,
+                description: 'Bantal memory foam dengan teknologi cooling gel, ergonomis untuk leher dan kepala. Solusi tidur nyenyak tanpa nyeri leher.',
+                colors: ['#e2e8f0', '#1e1e2e', '#6366f1']
+            },
+
+            // ---- Olahraga ----
+            {
+                id: 19,
+                name: 'Sepatu Lari AirStride',
+                category: 'olahraga',
+                categoryLabel: '⚽ Olahraga',
+                price: 1499000,
+                oldPrice: 1999000,
+                emoji: '👟',
+                rating: 4.8,
+                reviews: 2340,
+                description: 'Sepatu lari dengan teknologi bantalan udara, upper knit breathable, dan outsole karbon-grip untuk traksi maksimal.',
+                colors: ['#6366f1', '#ef4444', '#1e1e2e', '#e2e8f0']
+            },
+            {
+                id: 20,
+                name: 'Set Jersey Olahraga Pro',
+                category: 'olahraga',
+                categoryLabel: '⚽ Olahraga',
+                price: 299000,
+                oldPrice: 449000,
+                emoji: '👕',
+                rating: 4.5,
+                reviews: 678,
+                description: 'Jersey olahraga bahan dry-fit premium, ringan, cepat kering, dan anti-bau. Cocok untuk lari, gym, dan berbagai olahraga.',
+                colors: ['#6366f1', '#ef4444', '#1e1e2e', '#10b981']
+            },
+            {
+                id: 21,
+                name: 'Yoga Mat Premium 6mm',
+                category: 'olahraga',
+                categoryLabel: '⚽ Olahraga',
+                price: 399000,
+                oldPrice: 549000,
+                emoji: '🧘',
+                rating: 4.6,
+                reviews: 890,
+                description: 'Mat yoga premium ketebalan 6mm dengan bahan TPE eco-friendly, anti-slip, dan dilengkapi tas carrier untuk mobilitas.',
+                colors: ['#6366f1', '#a855f7', '#10b981', '#e2e8f0']
+            },
+            {
+                id: 22,
+                name: 'Botol Minum Stainless 750ml',
+                category: 'olahraga',
+                categoryLabel: '⚽ Olahraga',
+                price: 199000,
+                oldPrice: 299000,
+                emoji: '💧',
+                rating: 4.7,
+                reviews: 1234,
+                description: 'Botol minum stainless steel double-wall, menjaga suhu minuman hingga 24 jam. BPA-free, tutup anti-bocor, dan desain minimalis.',
+                colors: ['#e2e8f0', '#1e1e2e', '#6366f1', '#ef4444']
+            },
+            {
+                id: 23,
+                name: 'Smart Fitness Tracker Band',
+                category: 'olahraga',
+                categoryLabel: '⚽ Olahraga',
+                price: 599000,
+                oldPrice: 799000,
+                emoji: '📿',
+                rating: 4.4,
+                reviews: 456,
+                description: 'Fitness tracker dengan monitor detak jantung, SpO2, langkah, kalori, dan kualitas tidur. Layar AMOLED dan baterai 10 hari.',
+                colors: ['#1e1e2e', '#e2e8f0', '#6366f1']
+            },
+            {
+                id: 24,
+                name: 'Set Dumbell adjustable 20kg',
+                category: 'olahraga',
+                categoryLabel: '⚽ Olahraga',
+                price: 2499000,
+                oldPrice: 3299000,
+                emoji: '🏋️',
+                rating: 4.8,
+                reviews: 345,
+                description: 'Set dumbbell adjustable 2×20kg dengan sistem putar cepat. Material besi cor berkualitas tinggi, lapisan karet anti-bau.',
+                colors: ['#1e1e2e', '#e2e8f0']
+            }
+        ];
+
+        // ================================================================
+        //  2. STATE
+        // ================================================================
+        const state = {
+            cart: [],
+            currentCategory: 'all',
+            searchQuery: '',
+            sortBy: 'default',
+            currentProduct: null,
+            modalQty: 1
+        };
+
+        // Load cart from localStorage
+        function loadCart() {
+            try {
+                const saved = localStorage.getItem('shopverse_cart');
+                if (saved) {
+                    state.cart = JSON.parse(saved);
+                }
+            } catch (e) {}
+        }
+        function saveCart() {
+            localStorage.setItem('shopverse_cart', JSON.stringify(state.cart));
+        }
+        loadCart();
+
+        // ================================================================
+        //  3. DOM REFS
+        // ================================================================
+        const $ = (sel) => document.querySelector(sel);
+        const $$ = (sel) => document.querySelectorAll(sel);
+
+        const productsGrid = $('#productsGrid');
+        const emptyState = $('#emptyState');
+        const productCount = $('#productCount');
+        const sortSelect = $('#sortSelect');
+        const searchInput = $('#searchInput');
+        const categoryPills = $$('.category-pill');
+        const cartToggle = $('#cartToggle');
+        const cartSidebar = $('#cartSidebar');
+        const cartOverlay = $('#cartOverlay');
+        const cartClose = $('#cartClose');
+        const cartItems = $('#cartItems');
+        const cartCount = $('#cartCount');
+        const cartItemCount = $('#cartItemCount');
+        const cartFooter = $('#cartFooter');
+        const cartTotal = $('#cartTotal');
+        const checkoutBtn = $('#checkoutBtn');
+        const productModal = $('#productModal');
+        const modalClose = $('#modalClose');
+        const checkoutOverlay = $('#checkoutOverlay');
+        const placeOrderBtn = $('#placeOrderBtn');
+        const toastContainer = $('#toastContainer');
+        const hamburger = $('#hamburger');
+        const mobileMenu = $('#mobileMenu');
+        const searchToggle = $('#searchToggle');
+        const navbar = $('#navbar');
+
+        // ================================================================
+        //  4. PARTICLES
+        // ================================================================
         (function initParticles() {
             const canvas = document.getElementById('particles-canvas');
             const ctx = canvas.getContext('2d');
@@ -831,41 +1687,37 @@
             window.addEventListener('resize', resize);
             resize();
 
-            const COUNT = 100;
+            const COUNT = 80;
             for (let i = 0; i < COUNT; i++) {
                 particles.push({
                     x: Math.random() * w,
                     y: Math.random() * h,
-                    vx: (Math.random() - 0.5) * 0.6,
-                    vy: (Math.random() - 0.5) * 0.6,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
                     r: Math.random() * 2 + 0.5,
-                    alpha: Math.random() * 0.5 + 0.1
+                    alpha: Math.random() * 0.4 + 0.05
                 });
             }
 
             function draw() {
                 ctx.clearRect(0, 0, w, h);
-
-                // draw particles
                 for (const p of particles) {
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
                     ctx.fillStyle = `rgba(148,163,184,${p.alpha})`;
                     ctx.fill();
                 }
-
-                // draw connections
                 for (let i = 0; i < particles.length; i++) {
                     for (let j = i + 1; j < particles.length; j++) {
                         const dx = particles[i].x - particles[j].x;
                         const dy = particles[i].y - particles[j].y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 140) {
+                        if (dist < 120) {
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(148,163,184,${(1 - dist / 140) * 0.15})`;
-                            ctx.lineWidth = 0.6;
+                            ctx.strokeStyle = `rgba(148,163,184,${(1 - dist / 120) * 0.12})`;
+                            ctx.lineWidth = 0.5;
                             ctx.stroke();
                         }
                     }
@@ -891,100 +1743,496 @@
             loop();
         })();
 
-        // ============================================================
-        //  2. NAVBAR SCROLL
-        // ============================================================
-        const navbar = document.getElementById('navbar');
+        // ================================================================
+        //  5. RENDER PRODUCTS
+        // ================================================================
+        function formatPrice(num) {
+            return 'Rp ' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        function getStars(rating) {
+            const full = Math.floor(rating);
+            const half = rating - full >= 0.5 ? 1 : 0;
+            let s = '★'.repeat(full);
+            if (half) s += '½';
+            s += '☆'.repeat(5 - full - half);
+            return s;
+        }
+
+        function getFilteredProducts() {
+            let filtered = [...products];
+
+            // Category
+            if (state.currentCategory !== 'all') {
+                filtered = filtered.filter(p => p.category === state.currentCategory);
+            }
+
+            // Search
+            if (state.searchQuery.trim()) {
+                const q = state.searchQuery.toLowerCase().trim();
+                filtered = filtered.filter(p =>
+                    p.name.toLowerCase().includes(q) ||
+                    p.categoryLabel.toLowerCase().includes(q) ||
+                    p.description.toLowerCase().includes(q)
+                );
+            }
+
+            // Sort
+            switch (state.sortBy) {
+                case 'price-asc':
+                    filtered.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    filtered.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    filtered.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'name':
+                    filtered.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+            }
+
+            return filtered;
+        }
+
+        function renderProducts() {
+            const filtered = getFilteredProducts();
+
+            if (filtered.length === 0) {
+                productsGrid.innerHTML = '';
+                emptyState.style.display = 'block';
+                productCount.textContent = '0 item';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            productCount.textContent = filtered.length + ' item' + (filtered.length > 1 ? 's' : '');
+
+            let html = '';
+            filtered.forEach((p, idx) => {
+                const inCart = state.cart.find(c => c.id === p.id);
+                html += `
+                    <div class="product-card reveal" data-id="${p.id}" style="transition-delay:${idx * 0.03}s">
+                        <div class="product-card-image">
+                            ${p.oldPrice ? '<span class="badge product-badge">🔥 Diskon</span>' : ''}
+                            <button class="product-wishlist" data-id="${p.id}" title="Wishlist">♡</button>
+                            <span style="position:relative;z-index:1;">${p.emoji}</span>
+                        </div>
+                        <div class="product-card-body">
+                            <div class="product-category">${p.categoryLabel}</div>
+                            <h3>${p.name}</h3>
+                            <div class="product-rating">
+                                <span class="product-stars">${getStars(p.rating)}</span>
+                                <span>(${p.reviews})</span>
+                            </div>
+                            <div class="product-price-row">
+                                <div class="product-price">
+                                    ${formatPrice(p.price)}
+                                    ${p.oldPrice ? `<span class="product-price-old">${formatPrice(p.oldPrice)}</span>` : ''}
+                                </div>
+                                <button class="btn-add-cart ${inCart ? 'added' : ''}" data-id="${p.id}" title="${inCart ? 'Di keranjang' : 'Tambah ke keranjang'}">
+                                    ${inCart ? '✓' : '+'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            productsGrid.innerHTML = html;
+
+            // Re-run reveal observer
+            revealObserver.disconnect();
+            $$('.reveal').forEach(el => revealObserver.observe(el));
+
+            // Attach product card click → modal
+            $$('.product-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.btn-add-cart') || e.target.closest('.product-wishlist')) return;
+                    const id = parseInt(card.dataset.id);
+                    openProductModal(id);
+                });
+            });
+
+            // Attach add-to-cart buttons
+            $$('.btn-add-cart').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const id = parseInt(btn.dataset.id);
+                    addToCart(id);
+                });
+            });
+
+            // Attach wishlist
+            $$('.product-wishlist').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    btn.textContent = '♥';
+                    btn.style.color = '#ef4444';
+                    showToast('Ditambahkan ke wishlist!', '❤️');
+                });
+            });
+        }
+
+        // ================================================================
+        //  6. CART FUNCTIONS
+        // ================================================================
+        function addToCart(id, qty = 1) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            const existing = state.cart.find(c => c.id === id);
+            if (existing) {
+                existing.qty += qty;
+            } else {
+                state.cart.push({ ...product, qty });
+            }
+
+            saveCart();
+            updateCartUI();
+            renderProducts(); // Refresh button states
+            showToast(`${product.name} ditambahkan ke keranjang!`, '🛒');
+        }
+
+        function removeFromCart(id) {
+            state.cart = state.cart.filter(c => c.id !== id);
+            saveCart();
+            updateCartUI();
+            renderProducts();
+        }
+
+        function updateCartQty(id, delta) {
+            const item = state.cart.find(c => c.id === id);
+            if (!item) return;
+            item.qty = Math.max(1, item.qty + delta);
+            if (item.qty === 0) {
+                removeFromCart(id);
+                return;
+            }
+            saveCart();
+            updateCartUI();
+            renderProducts();
+        }
+
+        function getCartTotal() {
+            return state.cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+        }
+
+        function getCartCount() {
+            return state.cart.reduce((sum, item) => sum + item.qty, 0);
+        }
+
+        function updateCartUI() {
+            const count = getCartCount();
+            cartCount.textContent = count;
+            cartItemCount.textContent = `(${count})`;
+
+            if (state.cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="cart-empty">
+                        <div class="emoji">🛒</div>
+                        <p>Keranjang belanja masih kosong</p>
+                        <p style="font-size:0.8rem;margin-top:6px;">Yuk, tambahkan produk favoritmu!</p>
+                    </div>
+                `;
+                cartFooter.style.display = 'none';
+                return;
+            }
+
+            cartFooter.style.display = 'block';
+
+            let itemsHtml = '';
+            state.cart.forEach(item => {
+                itemsHtml += `
+                    <div class="cart-item">
+                        <div class="cart-item-image">${item.emoji}</div>
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <div class="cart-item-price">${formatPrice(item.price)}</div>
+                            <div class="cart-item-qty">
+                                <button onclick="updateCartQty(${item.id}, -1)">−</button>
+                                <span>${item.qty}</span>
+                                <button onclick="updateCartQty(${item.id}, 1)">+</button>
+                            </div>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeFromCart(${item.id})">✕</button>
+                    </div>
+                `;
+            });
+            cartItems.innerHTML = itemsHtml;
+
+            const total = getCartTotal();
+            cartTotal.textContent = formatPrice(total);
+        }
+
+        // ================================================================
+        //  7. CART SIDEBAR TOGGLE
+        // ================================================================
+        function openCart() {
+            cartSidebar.classList.add('open');
+            cartOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCart() {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        cartToggle.addEventListener('click', openCart);
+        cartClose.addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', closeCart);
+
+        // ================================================================
+        //  8. PRODUCT MODAL
+        // ================================================================
+        function openProductModal(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+            state.currentProduct = product;
+            state.modalQty = 1;
+
+            $('#modalImage').textContent = product.emoji;
+            $('#modalCategory').textContent = product.categoryLabel;
+            $('#modalTitle').textContent = product.name;
+            $('#modalStars').textContent = getStars(product.rating);
+            $('#modalRatingText').textContent = `(${product.rating} · ${product.reviews} ulasan)`;
+            $('#modalPrice').innerHTML = formatPrice(product.price) +
+                (product.oldPrice ? ` <span class="old">${formatPrice(product.oldPrice)}</span>` : '');
+            $('#modalDesc').textContent = product.description;
+            $('#modalQtyValue').textContent = '1';
+            $('#modalAddToCart').innerHTML = '🛒 Tambah ke Keranjang';
+            $('#modalAddToCart').style.background = '';
+
+            // Colors
+            const colorsContainer = $('#modalColors');
+            colorsContainer.innerHTML = '<span>Warna:</span>';
+            if (product.colors) {
+                product.colors.forEach((c, i) => {
+                    const dot = document.createElement('span');
+                    dot.className = 'color-dot' + (i === 0 ? ' active' : '');
+                    dot.style.background = c;
+                    dot.addEventListener('click', () => {
+                        $$('.color-dot').forEach(d => d.classList.remove('active'));
+                        dot.classList.add('active');
+                    });
+                    colorsContainer.appendChild(dot);
+                });
+            }
+
+            productModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProductModal() {
+            productModal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        modalClose.addEventListener('click', closeProductModal);
+        productModal.addEventListener('click', (e) => {
+            if (e.target === productModal) closeProductModal();
+        });
+
+        // Modal Qty
+        $('#modalQtyMinus').addEventListener('click', () => {
+            if (state.modalQty > 1) {
+                state.modalQty--;
+                $('#modalQtyValue').textContent = state.modalQty;
+            }
+        });
+        $('#modalQtyPlus').addEventListener('click', () => {
+            if (state.modalQty < 10) {
+                state.modalQty++;
+                $('#modalQtyValue').textContent = state.modalQty;
+            }
+        });
+
+        // Modal Add to Cart
+        $('#modalAddToCart').addEventListener('click', () => {
+            if (!state.currentProduct) return;
+            addToCart(state.currentProduct.id, state.modalQty);
+            const btn = $('#modalAddToCart');
+            btn.innerHTML = '✓ Ditambahkan!';
+            btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            setTimeout(() => {
+                btn.innerHTML = '🛒 Tambah ke Keranjang';
+                btn.style.background = '';
+            }, 1500);
+        });
+
+        // ================================================================
+        //  9. FILTERS & SORT
+        // ================================================================
+        function filterProducts(category) {
+            state.currentCategory = category;
+            categoryPills.forEach(pill => {
+                pill.classList.toggle('active', pill.dataset.category === category);
+            });
+            renderProducts();
+        }
+
+        categoryPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                filterProducts(pill.dataset.category);
+            });
+        });
+
+        sortSelect.addEventListener('change', () => {
+            state.sortBy = sortSelect.value;
+            renderProducts();
+        });
+
+        searchInput.addEventListener('input', () => {
+            state.searchQuery = searchInput.value;
+            renderProducts();
+        });
+
+        // ================================================================
+        //  10. CHECKOUT
+        // ================================================================
+        checkoutBtn.addEventListener('click', () => {
+            if (state.cart.length === 0) {
+                showToast('Keranjang masih kosong!', '⚠️', 'error');
+                return;
+            }
+            const total = getCartTotal();
+            const shipping = 15000;
+            document.getElementById('checkoutSubtotal').textContent = formatPrice(total);
+            document.getElementById('checkoutShipping').textContent = formatPrice(shipping);
+            document.getElementById('checkoutTotal').textContent = formatPrice(total + shipping);
+
+            checkoutOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeCheckout() {
+            checkoutOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        checkoutOverlay.addEventListener('click', (e) => {
+            if (e.target === checkoutOverlay) closeCheckout();
+        });
+
+        placeOrderBtn.addEventListener('click', () => {
+            const name = document.getElementById('checkoutName').value.trim();
+            const email = document.getElementById('checkoutEmail').value.trim();
+            const phone = document.getElementById('checkoutPhone').value.trim();
+            const address = document.getElementById('checkoutAddress').value.trim();
+
+            if (!name || !email || !phone || !address) {
+                showToast('Harap lengkapi semua data!', '⚠️', 'error');
+                return;
+            }
+            if (!email.includes('@')) {
+                showToast('Email tidak valid!', '⚠️', 'error');
+                return;
+            }
+
+            const total = getCartTotal() + 15000;
+            placeOrderBtn.disabled = true;
+            placeOrderBtn.textContent = '⏳ Memproses...';
+
+            setTimeout(() => {
+                // Reset
+                state.cart = [];
+                saveCart();
+                updateCartUI();
+                renderProducts();
+                closeCheckout();
+
+                showToast(`✅ Pesanan berhasil! Total ${formatPrice(total)}`, '🎉', 'success');
+
+                document.getElementById('checkoutName').value = '';
+                document.getElementById('checkoutEmail').value = '';
+                document.getElementById('checkoutPhone').value = '';
+                document.getElementById('checkoutProvince').value = '';
+                document.getElementById('checkoutCity').value = '';
+                document.getElementById('checkoutAddress').value = '';
+
+                placeOrderBtn.disabled = false;
+                placeOrderBtn.textContent = '✅ Pesan Sekarang';
+            }, 1500);
+        });
+
+        // ================================================================
+        //  11. TOAST NOTIFICATIONS
+        // ================================================================
+        function showToast(message, icon = 'ℹ️', type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span class="toast-icon">${icon}</span> ${message}`;
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('removing');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ================================================================
+        //  12. NAVBAR SCROLL
+        // ================================================================
         window.addEventListener('scroll', () => {
             navbar.classList.toggle('scrolled', window.scrollY > 60);
         });
 
-        // ============================================================
-        //  3. HAMBURGER MENU
-        // ============================================================
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
+        // ================================================================
+        //  13. HAMBURGER MENU
+        // ================================================================
         hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-        });
-        // Tutup menu saat link diklik (mobile)
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => navLinks.classList.remove('open'));
+            mobileMenu.classList.toggle('open');
         });
 
-        // ============================================================
-        //  4. SCROLL REVEAL (Intersection Observer)
-        // ============================================================
-        const revealEls = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+        }
+
+        // ================================================================
+        //  14. SEARCH TOGGLE (mobile)
+        // ================================================================
+        searchToggle.addEventListener('click', () => {
+            const wrapper = document.querySelector('.search-wrapper');
+            wrapper.classList.toggle('mobile-show');
+            if (wrapper.classList.contains('mobile-show')) {
+                wrapper.querySelector('input').focus();
+            }
+        });
+
+        // ================================================================
+        //  15. SCROLL REVEAL
+        // ================================================================
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
-        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-        revealEls.forEach(el => observer.observe(el));
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-        // ============================================================
-        //  5. COUNTER ANIMATION
-        // ============================================================
-        const statNumbers = document.querySelectorAll('.stat-number');
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !entry.target.dataset.counted) {
-                    entry.target.dataset.counted = 'true';
-                    const target = parseInt(entry.target.dataset.target, 10);
-                    let current = 0;
-                    const step = Math.ceil(target / 60);
-                    const timer = setInterval(() => {
-                        current += step;
-                        if (current >= target) {
-                            current = target;
-                            clearInterval(timer);
-                        }
-                        entry.target.textContent = current + (target === 98 ? '%' : '');
-                    }, 25);
-                }
-            });
-        }, { threshold: 0.5 });
-        statNumbers.forEach(el => counterObserver.observe(el));
+        // ================================================================
+        //  16. INIT
+        // ================================================================
+        renderProducts();
+        updateCartUI();
 
-        // ============================================================
-        //  6. CTA FORM
-        // ============================================================
-        const ctaForm = document.getElementById('ctaForm');
-        ctaForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const input = ctaForm.querySelector('input');
-            const email = input.value.trim();
-            if (!email) return;
-            const btn = ctaForm.querySelector('button');
-            btn.textContent = '✅ Terkirim!';
-            btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-            input.value = '';
-            setTimeout(() => {
-                btn.textContent = 'Kirim';
-                btn.style.background = '';
-            }, 3000);
+        // Observe initial reveals
+        $$('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Keyboard: Escape to close modals
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeProductModal();
+                closeCart();
+                closeCheckout();
+            }
         });
 
-        // ============================================================
-        //  7. CURSOR GLOW (interaktif di hero)
-        // ============================================================
-        const orb = document.querySelector('.hero-orb');
-        if (orb) {
-            document.querySelector('.hero-visual').addEventListener('mousemove', (e) => {
-                const rect = orb.getBoundingClientRect();
-                const x = (e.clientX - rect.left - rect.width / 2) / rect.width * 20;
-                const y = (e.clientY - rect.top - rect.height / 2) / rect.height * 20;
-                orb.style.transform = `translate(${x}px, ${y}px)`;
-            });
-            document.querySelector('.hero-visual').addEventListener('mouseleave', () => {
-                orb.style.transform = '';
-            });
-        }
-
-        console.log('🚀 Horizon Landing Page — siap meluncur!');
+        console.log('🚀 ShopVerse Ecommerce — siap belanja!');
     </script>
+
 </body>
 </html>
