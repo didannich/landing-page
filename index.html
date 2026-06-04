@@ -1,9 +1,27 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="no-js">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Horizon Digital — Build the Future</title>
+    <meta name="description" content="Horizon Digital — Solusi digital terpercaya untuk UI/UX, web development, AI, mobile apps, cloud & strategi digital. Bangun masa depan bisnis Anda bersama kami." />
+    <link rel="canonical" href="https://horizon.digital/" />
+    <!-- Open Graph -->
+    <meta property="og:title" content="Horizon Digital — Build the Future" />
+    <meta property="og:description" content="Solusi digital terpercaya untuk bisnis Anda. Dari konsep hingga peluncuran." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://horizon.digital/" />
+    <meta property="og:image" content="https://horizon.digital/og-image.png" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Horizon Digital — Build the Future" />
+    <meta name="twitter:description" content="Solusi digital terpercaya untuk bisnis Anda." />
+    <meta name="twitter:image" content="https://horizon.digital/og-image.png" />
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E&#128640;%3C/text%3E%3C/svg%3E" />
+    <!-- No-JS helper -->
+    <script>document.documentElement.classList.remove('no-js');</script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
@@ -534,12 +552,20 @@
         .footer-socials {
             display: flex;
             gap: 16px;
+            align-items: center;
         }
         .footer-socials a {
             color: #64748b;
             transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
         }
         .footer-socials a:hover { color: #e8edf5; }
+        .footer-socials svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
 
         /* ========== PARTICLES ========== */
         #particles-canvas {
@@ -559,6 +585,22 @@
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+        /* No-js fallback: ensure content is visible if JS is disabled */
+        .no-js .reveal {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        /* ========== REDUCED MOTION ========== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .reveal { opacity: 1; transform: none; }
+            html { scroll-behavior: auto; }
         }
 
         /* ========== RESPONSIVE ========== */
@@ -600,7 +642,7 @@
 <body>
 
     <!-- ===== PARTICLES CANVAS ===== -->
-    <canvas id="particles-canvas"></canvas>
+    <canvas id="particles-canvas" aria-hidden="true"></canvas>
 
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar" id="navbar">
@@ -611,7 +653,7 @@
                 <li><a href="#testimonials">Testimoni</a></li>
                 <li><a href="#contact" class="btn-nav">Hubungi Kami</a></li>
             </ul>
-            <button class="hamburger" id="hamburger" aria-label="Menu">
+            <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
         </div>
@@ -685,7 +727,7 @@
                 </div>
                 <div class="service-card reveal">
                     <div class="service-icon">🤖</div>
-                    <h3>AI & Automation</h3>
+                    <h3>AI &amp; Automation</h3>
                     <p>Integrasi kecerdasan buatan dan otomatisasi untuk efisiensi operasional bisnis Anda.</p>
                 </div>
                 <div class="service-card reveal">
@@ -695,7 +737,7 @@
                 </div>
                 <div class="service-card reveal">
                     <div class="service-icon">☁️</div>
-                    <h3>Cloud & DevOps</h3>
+                    <h3>Cloud &amp; DevOps</h3>
                     <p>Infrastruktur cloud yang skalabel, pipeline CI/CD, dan monitoring 24/7 untuk sistem Anda.</p>
                 </div>
                 <div class="service-card reveal">
@@ -760,8 +802,8 @@
                 <div class="badge">📩 Mulai Sekarang</div>
                 <h2>Siap Mengubah Ide Menjadi Realitas?</h2>
                 <p>Isi email Anda dan tim kami akan menghubungi dalam 1×24 jam untuk diskusi gratis.</p>
-                <form class="cta-form" id="ctaForm">
-                    <input type="email" placeholder="Masukkan email Anda..." required />
+                <form class="cta-form" id="ctaForm" novalidate>
+                    <input type="email" placeholder="Masukkan email Anda..." required aria-required="true" aria-label="Email address" />
                     <button type="submit">Kirim</button>
                 </form>
                 <p style="margin-top: 12px; font-size: 0.8rem; color: #475569;">Gratis konsultasi — tanpa komitmen.</p>
@@ -783,7 +825,7 @@
                         <li><a href="#">Web Development</a></li>
                         <li><a href="#">Mobile Apps</a></li>
                         <li><a href="#">UI/UX Design</a></li>
-                        <li><a href="#">AI & Automation</a></li>
+                        <li><a href="#">AI &amp; Automation</a></li>
                     </ul>
                 </div>
                 <div>
@@ -800,16 +842,22 @@
                     <ul>
                         <li><a href="#">FAQ</a></li>
                         <li><a href="#">Kebijakan Privasi</a></li>
-                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Syarat &amp; Ketentuan</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <span>&copy; 2025 Horizon Digital. All rights reserved.</span>
+                <span>&copy; 2026 Horizon Digital. All rights reserved.</span>
                 <div class="footer-socials">
-                    <a href="#" aria-label="Twitter">𝕏</a>
-                    <a href="#" aria-label="LinkedIn">in</a>
-                    <a href="#" aria-label="GitHub">GH</a>
+                    <a href="#" aria-label="Twitter / X">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                    <a href="#" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    </a>
                 </div>
             </div>
         </div>
@@ -821,6 +869,7 @@
         // ============================================================
         (function initParticles() {
             const canvas = document.getElementById('particles-canvas');
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
             let w, h, particles = [];
 
@@ -846,7 +895,6 @@
             function draw() {
                 ctx.clearRect(0, 0, w, h);
 
-                // draw particles
                 for (const p of particles) {
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
@@ -854,7 +902,6 @@
                     ctx.fill();
                 }
 
-                // draw connections
                 for (let i = 0; i < particles.length; i++) {
                     for (let j = i + 1; j < particles.length; j++) {
                         const dx = particles[i].x - particles[j].x;
@@ -905,25 +952,28 @@
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
         hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
+            const isOpen = navLinks.classList.toggle('open');
+            hamburger.setAttribute('aria-expanded', String(isOpen));
         });
-        // Tutup menu saat link diklik (mobile)
         navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => navLinks.classList.remove('open'));
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', 'false');
+            });
         });
 
         // ============================================================
-        //  4. SCROLL REVEAL (Intersection Observer)
+        //  4. SCROLL REVEAL
         // ============================================================
         const revealEls = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
         }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-        revealEls.forEach(el => observer.observe(el));
+        revealEls.forEach(el => revealObserver.observe(el));
 
         // ============================================================
         //  5. COUNTER ANIMATION
@@ -953,11 +1003,23 @@
         //  6. CTA FORM
         // ============================================================
         const ctaForm = document.getElementById('ctaForm');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         ctaForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const input = ctaForm.querySelector('input');
+            const input = ctaForm.querySelector('input[type="email"]');
             const email = input.value.trim();
             if (!email) return;
+            if (!emailRegex.test(email)) {
+                input.style.borderColor = '#ef4444';
+                input.style.background = 'rgba(239,68,68,0.08)';
+                input.placeholder = 'Email tidak valid...';
+                setTimeout(() => {
+                    input.style.borderColor = '';
+                    input.style.background = '';
+                    input.placeholder = 'Masukkan email Anda...';
+                }, 2000);
+                return;
+            }
             const btn = ctaForm.querySelector('button');
             btn.textContent = '✅ Terkirim!';
             btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
@@ -972,14 +1034,15 @@
         //  7. CURSOR GLOW (interaktif di hero)
         // ============================================================
         const orb = document.querySelector('.hero-orb');
-        if (orb) {
-            document.querySelector('.hero-visual').addEventListener('mousemove', (e) => {
+        const heroVisual = document.querySelector('.hero-visual');
+        if (orb && heroVisual) {
+            heroVisual.addEventListener('mousemove', (e) => {
                 const rect = orb.getBoundingClientRect();
                 const x = (e.clientX - rect.left - rect.width / 2) / rect.width * 20;
                 const y = (e.clientY - rect.top - rect.height / 2) / rect.height * 20;
                 orb.style.transform = `translate(${x}px, ${y}px)`;
             });
-            document.querySelector('.hero-visual').addEventListener('mouseleave', () => {
+            heroVisual.addEventListener('mouseleave', () => {
                 orb.style.transform = '';
             });
         }
